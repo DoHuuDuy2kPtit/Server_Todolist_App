@@ -1,0 +1,35 @@
+{
+  "name": "backend-app",
+  "version": "1.0.0",
+  "description": "App Todolist backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "eslint": "eslint './app/**/*.js'",
+    "migrate:run": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback",
+    "seed:run": "knex seed:run"
+  },
+  "dependencies": {
+    "async": "^3.2.0",
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "joi": "^17.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.14",
+    "lodash": "^4.17.20",
+    "mysql": "^2.18.1",
+    "objection": "^2.2.3",
+    "request": "^2.88.2",
+    "shortid": "^2.2.16"
+  },
+  "devDependencies": {
+    "eslint": "^7.16.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
+  }
+}
