@@ -13,8 +13,6 @@ jobs:
     - uses: actions/checkout@v2
     - run: |
         pwd && ls
-        mkdir -p /home/ubuntu/demo-ci-cd
-        sudo cp -r . /home/ubuntu/demo-ci-cd
-        cd /home/ubuntu/demo-ci-cd
-        npm --version
-        pm2 restart index
+        npm install
+        sudo cp -r . /var/www/api-todoapp.tk
+        pm2 restart todoapp
