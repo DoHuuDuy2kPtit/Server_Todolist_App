@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(middlewares.me);
 
-Object.keys(routes).map((route) => app.use('/', routes[route]));
+Object.keys(routes).map((route) => app.use('/api', routes[route]));
 
 app.use((req, res) => {
   res.send('Api not found');
