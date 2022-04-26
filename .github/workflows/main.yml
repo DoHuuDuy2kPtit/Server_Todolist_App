@@ -5,21 +5,17 @@ name: Node.js CI
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:
-
     runs-on: self-hosted
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14.x'
-      - run: pwd && ls
-      - run: npm install
-      - run: sudo cp -r . /var/www/api-todoapp.tk
-      - run: pm2 restart index
+    - uses: actions/checkout@v2
+    - run: |
+        pwd && ls
+        mkdir -p /home/ubuntu/demo-ci-cd
+        sudo cp -r . /home/ubuntu/demo-ci-cd
+        cd /home/ubuntu/demo-ci-cd
+        npm i
+        npm run build
+        pm2 restart pm2.json
