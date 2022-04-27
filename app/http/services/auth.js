@@ -28,7 +28,6 @@ exports.signUp = async ({ email, password, username }) => {
       email,
       password: hashPassword,
       username,
-      task_count: 0,
     });
     return '';
   } catch (error) {
