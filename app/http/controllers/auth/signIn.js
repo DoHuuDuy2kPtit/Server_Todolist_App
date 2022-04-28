@@ -1,6 +1,5 @@
 const Joi = require('joi');
 
-const { abort } = require('../../../helpers/error');
 const auth = require('../../services/auth');
 
 const validate = async (params, res) => {
