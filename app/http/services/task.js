@@ -1,22 +1,14 @@
-const { transaction } = require('objection');
-
-const { Task, User } = require('../../models');
+const { Task } = require('../../models');
 const { abort } = require('../../helpers/error');
 const taskStatus = require('../../enums/taskStatus');
 
-exports.addTask = async ({ title, userId }) => {
+exports.addTask = async ({ title, jobId, dueDate }) => {
   try {
-    await transaction(Task, User, async (TaskTrx, UserTrx) => {
-      await TaskTrx.query().insert({
-        title,
-        status: taskStatus.TODO,
-        user_id: userId,
-      });
-
-      await UserTrx
-        .query()
-        .findById(userId)
-        .increment('task_count', 1);
+    await Task.query().insert({
+      title,
+      status: taskStatus.TODO,
+      job_id: jobId,
+      due_date: dueDate,
     });
   } catch (error) {
     return abort(400, 'Add task failed');
@@ -24,73 +16,68 @@ exports.addTask = async ({ title, userId }) => {
   return '';
 };
 
-exports.getTasks = async ({ limit, offset, userId }) => {
+exports.getTasks = async ({ limit, offset, jobId }) => {
   const tasks = await Task
     .query()
-    .where('user_id', userId)
+    .where('job_id', jobId)
     .select('id', 'title', 'status')
     .orderBy('id', 'desc')
     .limit(limit)
     .offset(offset);
 
-  const { task_count: total } = await User
-    .query()
-    .findById(userId)
-    .select('task_count');
   return {
-    tasks, total, limit, offset,
+    tasks, limit, offset,
   };
 };
 
 exports.updateTask = async ({
-  taskId, title, status, userId,
+  taskId, title, status, jobId, dueDate, description,
 }) => {
   const task = await Task.query().findOne({ id: taskId });
   if (!task) {
     abort(404, "Task doesn't exist");
   }
-  if (task.user_id !== userId) {
+  if (task.job_id !== jobId) {
     abort(403, 'Forbidden');
   }
   try {
-    await task.$query().patch({ title, status });
+    await task.$query().patch({
+      title,
+      status,
+      due_date: dueDate,
+      description,
+    });
   } catch (error) {
     abort(500, 'Update task failed');
   }
 };
 
-exports.removeTask = async ({ taskId, userId }) => {
+exports.removeTask = async ({ taskId, jobId }) => {
   const task = await Task.query().findById(taskId);
 
   if (!task) {
     abort(404, "Task doesn't exist");
   }
-  if (task.user_id !== userId) {
+  if (task.user_id !== jobId) {
     abort(403, 'Forbidden');
   }
 
   try {
-    await transaction(User, Task, async (UserTrx, TaskTrx) => {
-      await TaskTrx.query().deleteById(taskId);
-
-      await UserTrx.query()
-        .findById(userId)
-        .decrement('task_count', 1);
-    });
+    await Task.query().deleteById(taskId);
   } catch (error) {
     abort(500, 'Remove task failed');
   }
 };
 
-exports.getTask = async ({ taskId, userId }) => {
+exports.getTask = async ({ taskId, jobId }) => {
   const task = await Task.query()
     .findById(taskId)
-    .select('id', 'title', 'status', 'user_id');
+    .select('id', 'title', 'status', 'job_id', 'description');
 
   if (!task) {
     abort(404, "Task doesn't exist");
   }
-  if (task.user_id !== userId) {
+  if (task.job_id !== jobId) {
     abort(403, 'Forbidden');
   }
 

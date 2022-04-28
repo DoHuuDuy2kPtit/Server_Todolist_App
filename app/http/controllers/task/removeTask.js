@@ -6,6 +6,7 @@ const { abort } = require('../../../helpers/error');
 const validate = async (params) => {
   const schema = Joi.object({
     taskId: Joi.number().integer().positive().required(),
+    jobId: Joi.number().integer().positive().required(),
   });
 
   try {
@@ -18,10 +19,11 @@ const validate = async (params) => {
 const removeTask = async (req, res) => {
   const params = {
     taskId: req.params.taskId,
+    jobId: req.params.jobId,
   };
 
   await validate(params);
-  await taskServices.removeTask({ ...params, userId: req.user.id });
+  await taskServices.removeTask({ ...params });
   res.sendStatus(204);
 };
 
