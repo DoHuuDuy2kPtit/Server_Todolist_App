@@ -37,7 +37,7 @@ exports.updateTask = async ({
   if (!task) {
     abort(404, "Task doesn't exist");
   }
-  if (task.job_id !== jobId) {
+  if (task.job_id !== Number(jobId)) {
     abort(403, 'Forbidden');
   }
   try {
