@@ -21,7 +21,9 @@ const addJob = async (req, res) => {
   };
   await validate(job, res);
   await jobServices.addJob({ ...job, userId: req.user.id, res });
-  return res.sendStatus(201);
+  return res.status(201).send({
+    message: 'success',
+  });
 };
 
 module.exports = addJob;
