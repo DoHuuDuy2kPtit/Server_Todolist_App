@@ -8,18 +8,19 @@ const SALT_ROUND = 10;
 exports.getProfile = async ({ userId }) => {
   const user = await User.query()
     .findOne({ id: userId })
-    .select('id', 'name', 'address', 'phone_number', 'description');
+    .select('id', 'name', 'email', 'address', 'phone_number', 'description');
 
   return user;
 };
 
 exports.updateProfile = async ({
-  userId, name, address, phoneNumber, description,
+  userId, name, address, phoneNumber, description, email,
 }) => {
   try {
     await User.query()
       .findOne({ id: userId })
       .patch({
+        email,
         name,
         address,
         phone_number: phoneNumber,

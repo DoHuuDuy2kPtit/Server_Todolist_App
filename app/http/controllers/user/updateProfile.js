@@ -5,6 +5,7 @@ const userService = require('../../services/user');
 
 const validate = async (params) => {
   const schema = Joi.object({
+    email: Joi.string().email(),
     name: Joi.string().max(127),
     address: Joi.string().max(127),
     phoneNumber: Joi.string().max(127),
@@ -19,6 +20,7 @@ const validate = async (params) => {
 
 const updateProfile = async (req, res) => {
   const params = {
+    email: req.body.email,
     name: req.body.name,
     address: req.body.address,
     phoneNumber: req.body.phoneNumber,
