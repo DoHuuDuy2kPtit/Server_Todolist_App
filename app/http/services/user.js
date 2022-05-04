@@ -55,3 +55,24 @@ exports.changePassword = async ({
 
   return '';
 };
+
+exports.forgotPassword = async ({ username, password }) => {
+  const user = await User.query()
+    .findOne({ username });
+
+  if (!user) {
+    return abort(404, 'User is not exist');
+  }
+
+  try {
+    const hashPassword = await bcrypt.hash(password, SALT_ROUND);
+
+    await user.$query().patch({
+      password: hashPassword,
+    });
+
+    return '';
+  } catch (error) {
+    return abort(400, 'Can not change password');
+  }
+};

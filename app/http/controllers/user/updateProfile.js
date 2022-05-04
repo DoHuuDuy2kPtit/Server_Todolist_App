@@ -23,7 +23,7 @@ const updateProfile = async (req, res) => {
     email: req.body.email,
     name: req.body.name,
     address: req.body.address,
-    phoneNumber: req.body.phoneNumber,
+    phoneNumber: req.body.phone_number,
     description: req.body.description,
   };
   await validate(params);
