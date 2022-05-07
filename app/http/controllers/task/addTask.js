@@ -24,7 +24,9 @@ const addTask = async (req, res) => {
   };
   await validate(task);
   await taskServices.addTask(task);
-  return res.sendStatus(201);
+  return res.status(201).send({
+    message: 'success',
+  });
 };
 
 module.exports = addTask;

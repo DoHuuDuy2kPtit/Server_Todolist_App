@@ -24,7 +24,9 @@ const removeTask = async (req, res) => {
 
   await validate(params);
   await taskServices.removeTask({ ...params });
-  res.sendStatus(204);
+  res.send(200).status({
+    message: 'success',
+  });
 };
 
 module.exports = removeTask;
