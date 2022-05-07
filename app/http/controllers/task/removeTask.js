@@ -24,7 +24,7 @@ const removeTask = async (req, res) => {
 
   await validate(params);
   await taskServices.removeTask({ ...params });
-  res.send(200).status({
+  res.status(200).send({
     message: 'success',
   });
 };

@@ -31,7 +31,7 @@ const updateTask = async (req, res) => {
   };
   await validate(params);
   await taskServices.updateTask({ ...params, userId: req.user.id });
-  res.send(200).status({
+  res.status(200).send({
     message: 'success',
   });
 };
