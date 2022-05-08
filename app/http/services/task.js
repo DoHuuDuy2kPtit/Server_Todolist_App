@@ -72,12 +72,12 @@ exports.removeTask = async ({ taskId, jobId }) => {
 exports.getTask = async ({ taskId, jobId }) => {
   const task = await Task.query()
     .findById(taskId)
-    .select('id', 'title', 'status', 'job_id', 'description');
+    .select('id', 'title', 'status', 'job_id as jobId', 'description', 'due_date as dueDate');
 
   if (!task) {
     abort(404, "Task doesn't exist");
   }
-  if (task.job_id !== Number(jobId)) {
+  if (task.jobId !== Number(jobId)) {
     abort(403, 'Forbidden');
   }
 
