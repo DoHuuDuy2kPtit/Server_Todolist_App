@@ -92,6 +92,6 @@ exports.getTask = async ({ taskId, jobId }) => {
 
   return {
     ...task,
-    dueDate: `${dd}-${mm}'-'${yyyy}`,
+    dueDate: `${dd}-${mm}-${yyyy}`,
   };
 };
