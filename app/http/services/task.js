@@ -58,7 +58,7 @@ exports.removeTask = async ({ taskId, jobId }) => {
   if (!task) {
     abort(404, "Task doesn't exist");
   }
-  if (task.user_id !== jobId) {
+  if (task.job_id !== Number(jobId)) {
     abort(403, 'Forbidden');
   }
 
