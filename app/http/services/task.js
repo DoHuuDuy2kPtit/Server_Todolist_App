@@ -81,5 +81,17 @@ exports.getTask = async ({ taskId, jobId }) => {
     abort(403, 'Forbidden');
   }
 
-  return task;
+  const date = new Date(task.dueDate);
+
+  const yyyy = date.getFullYear();
+  let mm = date.getMonth() + 1;
+  let dd = date.getDate();
+
+  if (dd < 10) dd = '0'.concat(dd);
+  if (mm < 10) mm = '0'.concat(mm);
+
+  return {
+    ...task,
+    dueDate: `${dd}-${mm}'-'${yyyy}`,
+  };
 };
