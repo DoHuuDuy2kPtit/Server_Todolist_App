@@ -8,6 +8,7 @@ const validate = async (params) => {
     jobId: Joi.number().integer().min(1).required(),
     title: Joi.string().min(3).max(127).required(),
     dueDate: Joi.date().required(),
+    time: Joi.string().required(),
   });
   try {
     await schema.validateAsync(params);
