@@ -2,13 +2,16 @@ const { Task } = require('../../models');
 const { abort } = require('../../helpers/error');
 const taskStatus = require('../../enums/taskStatus');
 
-exports.addTask = async ({ title, jobId, dueDate }) => {
+exports.addTask = async ({
+  title, jobId, dueDate, time,
+}) => {
   try {
     await Task.query().insert({
       title,
       status: taskStatus.TODO,
       job_id: jobId,
       due_date: dueDate,
+      time,
     });
   } catch (error) {
     return abort(400, 'Add task failed');
