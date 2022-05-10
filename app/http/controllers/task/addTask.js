@@ -21,6 +21,7 @@ const addTask = async (req, res) => {
     jobId: req.params.jobId,
     title: req.body.title,
     dueDate: req.body.dueDate,
+    time: req.body.time,
   };
   await validate(task);
   await taskServices.addTask(task);

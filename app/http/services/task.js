@@ -31,7 +31,7 @@ exports.getTasks = async ({ limit, offset, jobId }) => {
 };
 
 exports.updateTask = async ({
-  taskId, title, status, jobId, dueDate, description,
+  taskId, title, status, jobId, dueDate, description, time,
 }) => {
   const task = await Task.query().findOne({ id: taskId });
   if (!task) {
@@ -45,6 +45,7 @@ exports.updateTask = async ({
       title,
       status,
       due_date: dueDate,
+      time,
       description,
     });
   } catch (error) {
@@ -72,7 +73,7 @@ exports.removeTask = async ({ taskId, jobId }) => {
 exports.getTask = async ({ taskId, jobId }) => {
   const task = await Task.query()
     .findById(taskId)
-    .select('id', 'title', 'status', 'job_id as jobId', 'description', 'due_date as dueDate');
+    .select('id', 'title', 'status', 'job_id as jobId', 'description', 'due_date as dueDate', 'time');
 
   if (!task) {
     abort(404, "Task doesn't exist");

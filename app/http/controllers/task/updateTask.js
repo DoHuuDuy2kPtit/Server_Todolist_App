@@ -12,6 +12,7 @@ const validate = async (params) => {
     status: Joi.number().valid(...taskStatus.getValues()),
     description: Joi.string(),
     dueDate: Joi.date(),
+    time: Joi.string(),
   });
   try {
     return await schema.validateAsync(params);
@@ -28,6 +29,7 @@ const updateTask = async (req, res) => {
     status: req.body.status,
     description: req.body.description,
     dueDate: req.body.dueDate,
+    time: req.body.time,
   };
   await validate(params);
   await taskServices.updateTask({ ...params, userId: req.user.id });
