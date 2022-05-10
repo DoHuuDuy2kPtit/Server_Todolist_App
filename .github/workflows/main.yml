@@ -15,4 +15,6 @@ jobs:
         pwd && ls
         npm install
         sudo cp -r . /var/www/api-todoapp.tk
+        cd /var/www/api-todoapp.tk
+        npm run migrate:run
         pm2 restart todoapp
